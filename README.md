@@ -36,6 +36,11 @@ You can pass any instance of `android.content.SharedPreferences` to the `SimpleD
 The above example implements what the [deprecated](https://developer.android.com/reference/android/preference/PreferenceManager) class `PreferenceManager`'s `getDefaultSharedPreferences()` method returns.
 
 
+## Inspiration
+
+I was inspired by [TinyDB](https://github.com/kcochibili/TinyDB--Android-Shared-Preferences-Turbo) to make a simpler Kotlin version.
+
+
 ## Roadmap
 
 - Add support for more types
