@@ -1,4 +1,4 @@
-package com.tinaciousdesign.cannedreplies.services
+package [com.mydomain.myapp]
 
 import android.content.SharedPreferences
 import android.text.TextUtils
