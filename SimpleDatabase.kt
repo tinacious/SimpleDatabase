@@ -4,7 +4,14 @@ import android.content.SharedPreferences
 import android.text.TextUtils
 import com.google.gson.Gson
 
-
+/**
+ * A simple database class written in Kotlin.
+ * Github repository: https://github.com/tinacious/simpledatabase
+ *
+ * @author Tina Holly, info@tinaciousdesign.com
+ * @version 1.0.0
+ * @since 2020-05-18
+ */
 class SimpleDatabase(sharedPreferences: SharedPreferences) {
     private val gson = Gson()
     private val preferences = sharedPreferences
