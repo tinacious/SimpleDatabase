@@ -9,25 +9,35 @@ import com.google.gson.Gson
  * Github repository: https://github.com/tinacious/simpledatabase
  *
  * @author Tina Holly, info@tinaciousdesign.com
- * @version 1.0.0
- * @since 2020-05-18
+ * @version 1.1.0
+ * @since 2021-03-08
  */
-class SimpleDatabase(sharedPreferences: SharedPreferences) {
+interface SimpleDatabase {
+    fun getString(key: String, defaultValue: String?): String?
+    fun putString(key: String, value: String)
+    fun getInt(key: String, defaultValue: Int): Int
+    fun putInt(key: String, value: Int)
+    fun getBoolean(key: String, defaultValue: Boolean): Boolean
+    fun putBoolean(key: String, value: Boolean)
+    fun <T> getListObject(key: String, mClass: Class<T>): ArrayList<T>
+    fun <T> putListObject(key: String, objArray: ArrayList<T>)
+    fun remove(key: String)
+}
+
+class SimpleDatabaseImpl(sharedPreferences: SharedPreferences) : SimpleDatabase {
     private val gson = Gson()
     private val preferences = sharedPreferences
-
 
     /**
      * Strings
      */
 
-    fun getString(key: String): String =
-        preferences.getString(key, "") ?: ""
+    override fun getString(key: String, defaultValue: String?): String? =
+        preferences.getString(key, defaultValue) ?: defaultValue
 
-    fun putString(key: String, value: String) {
+    override fun putString(key: String, value: String) {
         preferences.edit().putString(key, value).apply()
     }
-
 
     /**
      * String lists
@@ -45,37 +55,45 @@ class SimpleDatabase(sharedPreferences: SharedPreferences) {
             .putString(key, TextUtils.join("‚‗‚", stringList.toTypedArray()))
             .apply()
 
-
     /**
      * Object lists
      */
 
-    fun <T> getListObject(key: String, mClass: Class<T>): ArrayList<T> =
+    override fun <T> getListObject(key: String, mClass: Class<T>): ArrayList<T> =
         getListString(key)
             .map { gson.fromJson(it, mClass) } as ArrayList<T>
 
-    fun <T> putListObject(key: String, objArray: ArrayList<T>) {
+    override fun <T> putListObject(key: String, objArray: ArrayList<T>) {
         val result = objArray.map { gson.toJson(it) } as ArrayList<String>
         putListString(key, result)
     }
-
 
     /**
      * Int
      */
 
-    fun getInt(key: String): Int = preferences.getInt(key, 0)
+    override fun getInt(key: String, defaultValue: Int): Int =
+        preferences.getInt(key, defaultValue)
 
-    fun putInt(key: String, value: Int) {
+    override fun putInt(key: String, value: Int) {
         preferences.edit().putInt(key, value).apply()
     }
 
+    /**
+     * Boolean
+     */
+    override fun getBoolean(key: String, defaultValue: Boolean): Boolean =
+        preferences.getBoolean(key, defaultValue)
+
+    override fun putBoolean(key: String, value: Boolean) {
+        preferences.edit().putBoolean(key, value).apply()
+    }
 
     /**
      * All types
      */
 
-    fun remove(key: String) {
+    override fun remove(key: String) {
         preferences.edit().remove(key).apply()
     }
 }

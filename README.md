@@ -35,6 +35,7 @@ You can pass any instance of `android.content.SharedPreferences` to the `SimpleD
 
 The above example implements what the [deprecated](https://developer.android.com/reference/android/preference/PreferenceManager) class `PreferenceManager`'s `getDefaultSharedPreferences()` method returns.
 
+See the file `./example_implementation.kt` for more details on how you can implement this class.
 
 ## Inspiration
 
