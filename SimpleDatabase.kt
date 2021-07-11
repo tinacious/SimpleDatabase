@@ -19,6 +19,8 @@ interface SimpleDatabase {
     fun putInt(key: String, value: Int)
     fun getBoolean(key: String, defaultValue: Boolean): Boolean
     fun putBoolean(key: String, value: Boolean)
+    fun <T> putObject(key: String, value: T)
+    fun <T> getObject(key: String, mClass: Class<T>): T?
     fun <T> getListObject(key: String, mClass: Class<T>): ArrayList<T>
     fun <T> putListObject(key: String, objArray: ArrayList<T>)
     fun remove(key: String)
@@ -54,6 +56,20 @@ class SimpleDatabaseImpl(sharedPreferences: SharedPreferences) : SimpleDatabase 
         preferences.edit()
             .putString(key, TextUtils.join("‚‗‚", stringList.toTypedArray()))
             .apply()
+
+    /**
+     * Objects
+     */
+
+    override fun <T> putObject(key: String, value: T) {
+        val serialized = gson.toJson(value) as String
+        preferences.edit().putString(key, serialized).apply()
+    }
+
+    override fun <T> getObject(key: String, mClass: Class<T>): T? {
+        val stringObject = preferences.getString(key, null) ?: return null
+        return gson.fromJson(stringObject, mClass)
+    }
 
     /**
      * Object lists
