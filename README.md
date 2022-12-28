@@ -51,7 +51,7 @@ You can pass any instance of `android.content.SharedPreferences` to the `SimpleD
 
 Here is an example where we get an instance of a private `SharedPreferences`:
 
-```kt
+```kotlin
 val sharedPreferences = context
     .getSharedPreferences(
         "${context.packageName}_preferences",
@@ -66,7 +66,7 @@ val database = SimpleDatabase(sharedPreferences)
 
 Below is a suggested approach to using it. We create a class `KeyValueStorage` that implements `SimpleDatabase`:
 
-```kt
+```kotlin
 import android.content.Context
 import com.tinaciousdesign.simpledatabase.SimpleDatabase
 import com.tinaciousdesign.simpledatabase.SimpleDatabaseImpl
@@ -101,7 +101,7 @@ The sample project in `app` has an example implementation that uses the [depende
 
 You can create the above-mentioned class and provide it with Koin in one of your modules:
 
-```kt
+```kotlin
 val servicesModule = module {
     single { KeyValueStorage.getInstance(androidContext()) }
 }
@@ -109,7 +109,7 @@ val servicesModule = module {
 
 Then you can use it in any Koin component as follows:
 
-```kt
+```kotlin
 class MyActivity : AppCompatActivity() {
     private val keyValueStorage by inject<KeyValueStorage>()
 }
