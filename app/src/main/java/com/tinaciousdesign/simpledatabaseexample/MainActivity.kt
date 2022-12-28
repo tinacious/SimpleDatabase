@@ -3,17 +3,13 @@ package com.tinaciousdesign.simpledatabaseexample
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.google.android.material.snackbar.Snackbar
 import com.tinaciousdesign.simpledatabaseexample.databinding.ActivityMainBinding
+import com.tinaciousdesign.simpledatabaseexample.di.AppContainer
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var keyValueStorage: KeyValueStorage
+    private lateinit var dependencies: AppContainer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,31 +17,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        dependencies = (applicationContext as ExampleApp).dependencies
 
         initExample()
     }
 
     private fun initExample() {
-        keyValueStorage = KeyValueStorage.getInstance(this)
-
-        val lastLoaded = keyValueStorage.getString("last_loaded", "(none)")
-
+        // Get the last loaded value
+        val lastLoaded = dependencies.keyValueStorage.getString("last_loaded", "(none)")
         Log.d("MainActivity", "Last loaded (1) = $lastLoaded")
 
-        keyValueStorage.putString("last_loaded", System.currentTimeMillis().toString())
-
-        val nextLastLoaded = keyValueStorage.getString("last_loaded", "(none)")
-
+        // Overwrite with new value
+        dependencies.keyValueStorage.putString("last_loaded", System.currentTimeMillis().toString())
+        val nextLastLoaded = dependencies.keyValueStorage.getString("last_loaded", "(none)")
         Log.d("MainActivity", "Last loaded (2) = $nextLastLoaded")
+
+        // Set both the above values on the text view
+        val message = "Last loaded (1) = $lastLoaded - Last loaded (2) = $nextLastLoaded"
+        binding.outputTextView.text = message
     }
 }

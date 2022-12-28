@@ -1,11 +1,14 @@
 package com.tinaciousdesign.simpledatabaseexample
 
 import android.content.Context
-import com.tinaciousdesign.simpledatabase.ISimpleDatabase
 import com.tinaciousdesign.simpledatabase.SimpleDatabase
+import com.tinaciousdesign.simpledatabase.SimpleDatabaseImpl
 
-class KeyValueStorage private constructor(private val delegate: ISimpleDatabase) :
-    ISimpleDatabase by delegate {
+/**
+ * Simple key value storage using SimpleDatabase
+ */
+class KeyValueStorage private constructor(private val delegate: SimpleDatabase) :
+    SimpleDatabase by delegate {
     companion object {
         @JvmStatic
         fun getInstance(context: Context): KeyValueStorage {
@@ -13,9 +16,9 @@ class KeyValueStorage private constructor(private val delegate: ISimpleDatabase)
                 "${context.packageName}_preferences",
                 Context.MODE_PRIVATE
             )
-            val simpleDatabase = SimpleDatabase(sharedPreferences)
+            val simpleDatabaseImpl = SimpleDatabaseImpl(sharedPreferences)
 
-            return KeyValueStorage(simpleDatabase)
+            return KeyValueStorage(simpleDatabaseImpl)
         }
     }
 }
