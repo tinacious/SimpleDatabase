@@ -36,11 +36,11 @@ Then add SimpleDatabase to your app's `build.gradle`:
 
 ```groovy
 dependencies {
-    implementation 'com.github.tinacious:simpledatabase:1.0.0'
+    implementation 'com.github.tinacious:simpledatabase:1.1.0'
 }
 ```
 
-Replace `1.0.0` with the latest version.
+Replace `1.1.0` with the latest version.
 
 
 ## Usage
