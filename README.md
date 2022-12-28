@@ -1,5 +1,8 @@
 # SimpleDatabase
 
+[![](https://jitpack.io/v/tinacious/simpledatabase.svg)](https://jitpack.io/#tinacious/simpledatabase)
+
+
 A simple database class for Android written in Kotlin.
 
 SimpleDatabase allows you to store the following data types in the Android SharedPreferences:
@@ -29,7 +32,7 @@ allprojects {
 
 ```
 
-Then add it to your app's `build.gradle`:
+Then add SimpleDatabase to your app's `build.gradle`:
 
 ```groovy
 dependencies {
@@ -64,6 +67,11 @@ val database = SimpleDatabase(sharedPreferences)
 Below is a suggested approach to using it. We create a class `KeyValueStorage` that implements `SimpleDatabase`:
 
 ```kt
+import android.content.Context
+import com.tinaciousdesign.simpledatabase.SimpleDatabase
+import com.tinaciousdesign.simpledatabase.SimpleDatabaseImpl
+
+
 /**
  * Simple key value storage using SimpleDatabase
  */
