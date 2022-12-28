@@ -40,7 +40,7 @@ dependencies {
 }
 ```
 
-Replacae `1.0.0` with the latest version.
+Replace `1.0.0` with the latest version.
 
 
 ## Usage
