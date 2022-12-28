@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.github.tinacious'
-version = 'distro-SNAPSHOT'
+version = 'main-SNAPSHOT'
 
 android {
     namespace 'com.tinaciousdesign.simpledatabase'
